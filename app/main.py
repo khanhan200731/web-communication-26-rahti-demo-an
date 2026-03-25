@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi import Request
+from fastapi.responses import HTMLResponse
 
 app = FastAPI()
 
@@ -24,3 +25,8 @@ def read_root():
 def get_ip_json(request: Request):
     ip=request.client.host
     return {"ip" : ip}
+
+@app.get("/ip", response_class=HTMLResponse)
+def get_ip_html(request: Request):
+    ip = request.client.host
+    return f"<h1>Your public IP is {ip}</h1>"
